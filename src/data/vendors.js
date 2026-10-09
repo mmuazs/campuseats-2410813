@@ -1,16 +1,16 @@
 const vendors = [
     {
-        id: 'my-restaurant',
-        name: 'Your Restaurant Name',
-        location: 'Mahallah ..., Block ...',
+        id: 'kafe-ali',
+        name: 'Kafe Mahallah Ali',
+        location: 'Mahallah Ali, Ground Floor',
         openHours: '7:00 am - 10:00 pm',
         isOpen: true,
         menu: [
-        { id: 'my-1', name: 'Dish 1', description: '...', price: 7.5, category: 'Rice',
+        { id: 'ali-1', name: 'Nasi Kerabu', description: 'blue rice, ulam, sambal, budu', price: 7.5, category: 'Rice',
         available: true },
-        { id: 'my-2', name: 'Dish 2', description: '...', price: 6, category:
+        { id: 'ali-2', name: 'Mee Goreng', description: 'mamak-style noodles', price: 6, category:
         'Noodles', available: true },
-        { id: 'my-3', name: 'Drink 1', description: '...', price: 2.5, category:
+        { id: 'ali-3', name: 'Extra Joss Anggur', description: 'Powdered energy drink', price: 2.5, category:
         'Drinks', available: false },
         ],
     },
