@@ -1,0 +1,76 @@
+[
+  {
+    "id": "2410813-los-pollos-hermanos",
+    "name": "Los Pollos Hermanos",
+    "location": "Albuquerque, New Mexico",
+    "openHours": "7:00 am - 10:00 pm",
+    "isOpen": true,
+    "menu": [
+      {
+        "id": "los-1",
+        "name": "Enchilada Rancheros",
+        "description": "Huevos Rancheros with two enchiladas",
+        "price": 7.5,
+        "category": "Platters",
+        "available": true
+      },
+      {
+        "id": "los-2",
+        "name": "Pollos Classic Breakfast",
+        "description": "Our basic Pollos burrito (Pollos bonus size - add .50 cents), with choice of coffee or orange juice",
+        "price": 6,
+        "category": "Breakfast",
+        "available": true
+      },
+      {
+        "id": "los-3",
+        "name": "Iced Tea",
+        "description": "Freshly brewed iced tea. Great to order before asking any questions. make it four",
+        "price": 2.5,
+        "category": "Drinks",
+        "available": true
+      }
+    ]
+  },
+  {
+    "id": "2414517-my-restaurant",
+    "name": "Rahmat Restaurant",
+    "location": "Mahallah Nusaibah, Ground Floor",
+    "openHours": "7:00 am - 10:00 pm",
+    "isOpen": true,
+    "menu": [
+      {
+        "id": "2414517-my-1",
+        "name": "Nasi Lemak Ayam Kampung",
+        "description": "Fried chicken with rich rice and served with soup",
+        "price": 7.5,
+        "category": "Rice",
+        "available": true
+      },
+      {
+        "id": "2414517-my-2",
+        "name": "Mee Hailam",
+        "description": "Yellow noodles served with thick broth",
+        "price": 6,
+        "category": "Noodles",
+        "available": true
+      },
+      {
+        "id": "2414517-my-3",
+        "name": "Sirap Bandung Soda",
+        "description": "Rose syrup with milk",
+        "price": 2.5,
+        "category": "Drinks",
+        "available": false
+      },
+      {
+        "id": "2414517-my-4",
+        "name": "Lai Chi Kang",
+        "description": "Refreshing Drink",
+        "price": 4,
+        "category": "Drinks",
+        "available": true
+      }
+    ]
+  }
+]
