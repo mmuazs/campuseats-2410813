@@ -17,6 +17,10 @@ function App() {
   const [view, setView] = useState('menu') // 'menu' | 'cart' | 'done'
   const [lastOrder, setLastOrder] = useState(null)
 
+  // B6: Digit 3 Feature State
+  const [favourites, setFavourites] = useState([])
+  const [showFavouritesOnly, setShowFavouritesOnly] = useState(false)
+
   useEffect(() => {
     const controller = new AbortController()
     setLoading(true)
@@ -77,6 +81,12 @@ function App() {
     setView('done')
   }
 
+  function toggleFavourite(itemId) {
+    setFavourites((prev) => 
+      prev.includes(itemId) ? prev.filter(id => id !== itemId) : [...prev, itemId]
+    )
+  }
+
   let content
   if (view === 'cart') {
     content = (
@@ -102,6 +112,13 @@ function App() {
   } else if (error) {
     content = <ErrorMessage message={error} onRetry={() => setReloadKey((k) => k + 1)} />
   } else {
+    
+    // B6: Filter menu based on Favourites toggle
+    let displayedMenu = selectedVendor ? selectedVendor.menu : []
+    if (showFavouritesOnly) {
+      displayedMenu = displayedMenu.filter(item => favourites.includes(item.id))
+    }
+
     content = (
       <>
         <section>
@@ -119,8 +136,27 @@ function App() {
         </section>
         {selectedVendor && (
           <section>
-            <h2 className="section-title">Menu: {selectedVendor.name}</h2>
-            <MenuList items={selectedVendor.menu} onAdd={handleAddToCart} />
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+              <h2 className="section-title">Menu: {selectedVendor.name}</h2>
+              <label>
+                <input 
+                  type="checkbox" 
+                  checked={showFavouritesOnly} 
+                  onChange={(e) => setShowFavouritesOnly(e.target.checked)} 
+                />
+                {' '}Favourites only
+              </label>
+            </div>
+            {displayedMenu.length > 0 ? (
+               <MenuList 
+                 items={displayedMenu} 
+                 onAdd={handleAddToCart} 
+                 favourites={favourites}
+                 onToggleFavourite={toggleFavourite}
+               />
+            ) : (
+              <p className="muted">No items match your filter.</p>
+            )}
           </section>
         )}
       </>
