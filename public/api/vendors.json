@@ -72,5 +72,45 @@
         "available": true
       }
     ]
+  },{
+    "id": "2417175-leblanc-cafe",
+    "name": "LeBlanc Cafe",
+    "location": "Yongen-Jaya, Tokyo",
+    "openHours": "7:00 am - 10:00 pm",
+    "isOpen": true,
+    "menu": [
+      {
+        "id": "2417175-lb-1",
+        "name": "Decent Coffee",
+        "description": "Coffee that almost lives up to Leblanc's. Restores 30 SP to 1 ally",
+        "price": 7.5,
+        "category": "Drinks",
+        "available": true
+      },
+      {
+        "id": "2417175-lb-2",
+        "name": "Master Curry",
+        "description": "Curry that surpasses Boss's flavor. Restores 100 SP to all allies",
+        "price": 6,
+        "category": "Rice",
+        "available": true
+      },
+      {
+        "id": "2417175-lb-3",
+        "name": "Leblanc Curry",
+        "description": "Specialty curry. Restores 30 SP to all allies",
+        "price": 5.0,
+        "category": "Rice",
+        "available": false
+      },
+      {
+        "id": "2417175-lb-4",
+        "name": "Master Coffee",
+        "description": "Coffee that surpasses Boss's flavor. Restores 100 SP to 1 ally",
+        "price": 4,
+        "category": "Drinks",
+        "available": true
+      }
+    ]
   }
 ]
