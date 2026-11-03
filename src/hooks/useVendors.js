@@ -1,4 +1,5 @@
-import { useState, useEffect } from 'react'
+import { useEffect, useState } from 'react'
+import { subscribeToVendors } from '../services/vendors.js'
 
 export function useVendors() {
   const [vendors, setVendors] = useState([])
@@ -6,28 +7,16 @@ export function useVendors() {
   const [error, setError] = useState(null)
   const [reloadKey, setReloadKey] = useState(0)
 
-  const reload = () => setReloadKey((prev) => prev + 1)
-
   useEffect(() => {
-    const controller = new AbortController()
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setLoading(true)
     setError(null)
-
-    fetch('/api/vendors.json', { signal: controller.signal })
-      .then((res) => {
-        if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`)
-        return res.json()
-      })
-      .then((data) => setVendors(data))
-      .catch((err) => {
-        if (err.name !== 'AbortError') {
-          setError(err.message)
-        }
-      })
-      .finally(() => setLoading(false))
-
-    return () => controller.abort()
+    const unsubscribe = subscribeToVendors(
+      (data) => { setVendors(data); setLoading(false) },
+      (err) => { setError(err.message); setLoading(false) },
+    )
+    return unsubscribe // stop listening when the component unmounts
   }, [reloadKey])
 
-  return { vendors, loading, error, reload }
+  return { vendors, loading, error, reload: () => setReloadKey((k) => k + 1) }
 }

@@ -1,15 +1,26 @@
+import { useState } from 'react'
 import { useNavigate } from 'react-router'
+import { useAuth } from '../hooks/useAuth.js'
 import { useCart } from '../hooks/useCart.js'
+import { placeOrders } from '../services/orders.js'
 import CartItem from '../components/CartItem.jsx'
 import CheckoutForm from '../components/CheckoutForm.jsx'
 
 function CartPage() {
-  const { cart, total, changeQty, removeFromCart, placeOrder } = useCart()
+  const { cart, total, changeQty, removeFromCart, clearCart } = useCart()
+  const { user } = useAuth()
   const navigate = useNavigate()
+  const [error, setError] = useState('')
 
-  const handleCheckout = (details) => {
-    placeOrder(details)
-    navigate('/orders')
+  async function handlePlaceOrder(details) {
+    setError('')
+    try {
+      await placeOrders(user, cart, details)
+      clearCart()
+      navigate('/orders')
+    } catch (err) {
+      setError(`Could not place the order: ${err.message}`)
+    }
   }
 
   // Safety check: Filter out corrupted old local storage data
@@ -27,6 +38,7 @@ function CartPage() {
   return (
     <section>
       <h2 className="section-title">Your cart</h2>
+      {error && <p className="field-error" role="alert">{error}</p>}
       <div className="cart-layout">
         <div className="cart-items">
           {validCart.map((line) => (
@@ -42,7 +54,10 @@ function CartPage() {
           </div>
         </div>
         <div className="checkout-sidebar">
-          <CheckoutForm onPlaceOrder={handleCheckout} />
+          <CheckoutForm
+            defaultName={user?.displayName ?? ''}
+            onPlaceOrder={handlePlaceOrder}
+          />
         </div>
       </div>
     </section>

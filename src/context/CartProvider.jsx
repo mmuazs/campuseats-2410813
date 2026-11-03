@@ -1,10 +1,23 @@
+import { useState, useEffect } from 'react'
+import { useAuth } from '../hooks/useAuth.js'
 import { useLocalStorage } from '../hooks/useLocalStorage.js'
 import { CartContext } from './cart-context.js'
+import { subscribeToFavourites, toggleFavouriteItem } from '../services/favourites.js'
 
 export function CartProvider({ children }) {
+  const { user } = useAuth()
+
   const [cart, setCart] = useLocalStorage('campuseats-cart', [])
-  const [orders, setOrders] = useLocalStorage('campuseats-orders', [])
-  const [favourites, setFavourites] = useLocalStorage('campuseats-favourites', [])
+  const [favourites, setFavourites] = useState([])
+
+  useEffect(() => {
+    if (!user) return
+    const unsubscribe = subscribeToFavourites(user.uid, setFavourites)
+    return () => {
+      unsubscribe()
+      setFavourites([])
+    }
+  }, [user])
 
   // Safely calculate count and total using optional chaining (?.)
   const count = cart.reduce((sum, line) => sum + (line?.qty || 0), 0)
@@ -36,36 +49,27 @@ export function CartProvider({ children }) {
     setCart((prev) => prev.filter((line) => line?.item?.id !== itemId))
   }
 
-  const placeOrder = (details) => {
-    const newOrder = {
-      id: Date.now().toString(),
-      date: new Date().toISOString(),
-      items: cart,
-      total,
-      details,
-    }
-    setOrders((prev) => [newOrder, ...prev])
+  const clearCart = () => {
     setCart([])
   }
 
-  const toggleFavourite = (itemId) => {
-    setFavourites((prev) =>
-      prev.includes(itemId) ? prev.filter((id) => id !== itemId) : [...prev, itemId]
-    )
+  const toggleFavourite = async (itemId) => {
+    if (!user) return
+    const isFav = favourites.includes(itemId)
+    await toggleFavouriteItem(user.uid, itemId, isFav)
   }
 
   return (
     <CartContext.Provider
       value={{
         cart,
-        orders,
+        clearCart,
         favourites,
         count,
         total,
         addToCart,
         changeQty,
         removeFromCart,
-        placeOrder,
         toggleFavourite,
       }}
     >

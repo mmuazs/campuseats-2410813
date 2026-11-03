@@ -1,16 +1,38 @@
+import { useState, useEffect } from 'react'
 import { useCart } from '../hooks/useCart.js'
 import { useVendors } from '../hooks/useVendors.js'
+import { subscribeToAllMenuItems } from '../services/vendors.js'
 import MenuItemCard from '../components/MenuItemCard.jsx'
 import { Loading, ErrorMessage } from '../components/Status.jsx'
 
 function FavouritesPage() {
   const { favourites, addToCart } = useCart()
-  const { vendors, loading, error, reload } = useVendors()
+  const { vendors, loading: vendorsLoading, error: vendorsError, reload } = useVendors()
+  const [menuItems, setMenuItems] = useState([])
+  const [menuLoading, setMenuLoading] = useState(true)
+  const [menuError, setMenuError] = useState(null)
 
-  if (loading) return <Loading />
-  if (error) return <ErrorMessage message={error} onRetry={reload} />
+  useEffect(() => {
+    const unsubscribe = subscribeToAllMenuItems(
+      (items) => {
+        setMenuItems(items)
+        setMenuLoading(false)
+      },
+      (err) => {
+        setMenuError(err.message)
+        setMenuLoading(false)
+      },
+    )
+    return unsubscribe
+  }, [])
 
-  const allItems = vendors.flatMap((v) => v.menu)
+  if (vendorsLoading || menuLoading) return <Loading />
+  if (vendorsError || menuError) return <ErrorMessage message={vendorsError || menuError} onRetry={reload} />
+
+  const allItems = menuItems.map((item) => ({
+    ...item,
+    vendorName: vendors.find((v) => v.id === item.vendorId)?.name || '',
+  }))
   const favouriteItems = allItems.filter((item) => favourites.includes(item.id))
 
   if (favouriteItems.length === 0) {
