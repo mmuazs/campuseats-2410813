@@ -1,10 +1,14 @@
+import { useAuth } from '../hooks/useAuth.js'
 import { useLocalStorage } from '../hooks/useLocalStorage.js'
 import { CartContext } from './cart-context.js'
 
 export function CartProvider({ children }) {
+  const { user } = useAuth()
+  const favsKey = user ? `ce-favs-${user.uid}` : null
+
   const [cart, setCart] = useLocalStorage('campuseats-cart', [])
   const [orders, setOrders] = useLocalStorage('campuseats-orders', [])
-  const [favourites, setFavourites] = useLocalStorage('campuseats-favourites', [])
+  const [favourites, setFavourites] = useLocalStorage(favsKey, [])
 
   // Safely calculate count and total using optional chaining (?.)
   const count = cart.reduce((sum, line) => sum + (line?.qty || 0), 0)
@@ -49,6 +53,7 @@ export function CartProvider({ children }) {
   }
 
   const toggleFavourite = (itemId) => {
+    if (!user) return
     setFavourites((prev) =>
       prev.includes(itemId) ? prev.filter((id) => id !== itemId) : [...prev, itemId]
     )

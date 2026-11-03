@@ -29,6 +29,46 @@
         "price": 2.5,
         "category": "Drinks",
         "available": true
+      },
+      {
+        "id": "los-4",
+        "name": "Taco Rancheros",
+        "description": "Huevos Rancheros with seasoned ground beef on corn tortillas",
+        "price": 5.99,
+        "category": "Platters",
+        "available": true
+      },
+      {
+        "id": "los-5",
+        "name": "Pollos Breakfast Sandwich",
+        "description": "Two eggs, boneless grilled chicken, green chile and salsa served on our classic bun",
+        "price": 4.59,
+        "category": "Breakfast",
+        "available": true
+      },
+      {
+        "id": "los-6",
+        "name": "Pollos Breakfast Tacos",
+        "description": "Shredded spiced chicken with eggs, potatoes, green chile and salsa (add cheese - .50 cents more)",
+        "price": 4.99,
+        "category": "Breakfast",
+        "available": true
+      },
+      {
+        "id": "los-7",
+        "name": "Bottled Water",
+        "description": "Medium sized plain bottled water",
+        "price": 1.09,
+        "category": "Drinks",
+        "available": true
+      },
+      {
+        "id": "los-8",
+        "name": "Orange Juice",
+        "description": "Freshly squeezed orange juice",
+        "price": 2.5,
+        "category": "Drinks",
+        "available": true
       }
     ]
   },
@@ -109,6 +149,22 @@
         "description": "Coffee that surpasses Boss's flavor. Restores 100 SP to 1 ally",
         "price": 4,
         "category": "Drinks",
+        "available": true
+      },
+      {
+        "id": "2417175-lb-5",
+        "name": "Omelette Sandwich",
+        "description": "Freshly made omelette served on a toasted bun",
+        "price": 4,
+        "category": "Sandwiches",
+        "available": true
+      },
+      {
+        "id": "2417175-lb-6",
+        "name": "Hot Dog",
+        "description": " Consumable food items found in the Mini Classic Kitchen and Cafeteria that restore 18 Hunger and 3 Energy.",
+        "price": 3.5,
+        "category": "HotDog",
         "available": true
       }
     ]

@@ -10,7 +10,7 @@ function FavouritesPage() {
   if (loading) return <Loading />
   if (error) return <ErrorMessage message={error} onRetry={reload} />
 
-  const allItems = vendors.flatMap((v) => v.menu)
+  const allItems = vendors.flatMap((v) => v.menu || [])
   const favouriteItems = allItems.filter((item) => favourites.includes(item.id))
 
   if (favouriteItems.length === 0) {
